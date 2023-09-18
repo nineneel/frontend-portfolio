@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import Header from '@/lib/components/header';
 import { neueMontreal } from '@/lib/styles/font';
+import { Header } from '@/lib/components';
 
 export const metadata: Metadata = {
   title: 'nineneel.',

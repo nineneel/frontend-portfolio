@@ -3,10 +3,10 @@ import Link from 'next/link';
 export default function NavBar({ onClick }: { onClick: () => void }) {
   return (
     <>
-      <div className='border-dark bg-background  absolute z-0 flex h-16 w-full items-stretch justify-between border-y'>
+      <div className='absolute z-0 flex h-16 w-full items-stretch justify-between border-y border-dark bg-background'>
         {/* Menu Button */}
         <div className='flex md:flex-1' onClick={onClick}>
-          <div className='border-dark flex items-center justify-center gap-2 border-r px-6 hover:cursor-pointer md:px-12'>
+          <div className='flex items-center justify-center gap-2 border-r border-dark px-6 hover:cursor-pointer md:px-12'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='18'
@@ -33,7 +33,7 @@ export default function NavBar({ onClick }: { onClick: () => void }) {
         {/* Contact Button */}
         <div className='hidden flex-1 items-center justify-end pr-12 md:flex'>
           {/* TODO: create button component use below style */}
-          <div className='bg-dark text-ligth rounded-sm px-5 py-2 text-sm font-medium'>
+          <div className='rounded-sm bg-dark px-5 py-2 text-sm font-medium text-ligth'>
             Contact
           </div>
         </div>

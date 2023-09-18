@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
-import NavBar from './navbar';
 import SideBar from './sidebar';
+import NavBar from './navbar';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
