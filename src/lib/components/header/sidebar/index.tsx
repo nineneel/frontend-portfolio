@@ -11,7 +11,7 @@ export default function SideBar({
   return (
     <>
       <div
-        className={`absolute top-0 z-10 flex h-screen w-full transition-all ${
+        className={`absolute top-0 z-50 flex h-screen w-full transition-all ${
           isOpen ? 'left-0' : 'left-[-100%]'
         }`}
       >
@@ -61,7 +61,7 @@ export default function SideBar({
         <div
           className={`flex h-full w-full flex-1 bg-dark/50 opacity-${
             isOpen
-              ? '1 transition-opacity duration-500'
+              ? '1 transition-all duration-500'
               : '0 transition-opacity duration-500'
           }`}
           onClick={onClick}

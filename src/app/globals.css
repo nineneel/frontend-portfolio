@@ -5,7 +5,3 @@
 body {
   @apply bg-background;
 }
-
-section {
-  /* @apply px-4 md:px-12; */
-}

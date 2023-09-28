@@ -3,10 +3,10 @@ import Link from 'next/link';
 export default function NavBar({ onClick }: { onClick: () => void }) {
   return (
     <>
-      <div className='absolute z-0 flex h-16 w-full items-stretch justify-between border-y border-dark bg-background'>
+      <div className='absolute z-40 flex h-16 w-full items-stretch justify-between border-y-2 border-dark bg-background bg-noice'>
         {/* Menu Button */}
         <div className='flex md:flex-1' onClick={onClick}>
-          <div className='flex items-center justify-center gap-2 border-r border-dark px-6 hover:cursor-pointer md:px-12'>
+          <div className='flex items-center justify-center gap-2 border-r-2 border-dark px-6 hover:cursor-pointer md:px-12'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='18'

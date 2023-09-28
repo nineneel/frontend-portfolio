@@ -11,13 +11,25 @@ const config: Config = {
     extend: {
       fontFamily: {
         primary: ['var(--font-neue-montreal)'],
-        hero: ['var(--font-tungsten)'],
+        secondary: ['var(--font-tungsten)'],
       },
       colors: {
         background: '#F1F0EE',
         dark: '#000000',
         ligth: '#FFFFFF',
         'ligth-grey': '#F4F4F4',
+      },
+      backgroundImage: {
+        noice: "url('../assets/images/pp.png')",
+      },
+      animation: {
+        marquee: 'marquee 35s linear infinite',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-200%)' },
+        },
       },
     },
   },
