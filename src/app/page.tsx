@@ -16,6 +16,7 @@ import 'swiper/css/effect-creative';
 import Link from 'next/link';
 
 export default function Home() {
+  // dummy data
   const techStackImageURL = [
     {
       name: 'figma',
@@ -35,13 +36,7 @@ export default function Home() {
     },
   ];
 
-  const [hoveredItem, setHoveredItem] = useState<number>(0);
-
-  const handleMouseEnter = (index: number) => {
-    setHoveredItem(index);
-  };
-
-  const whatIDoList = [
+  const services = [
     {
       title: 'Web Design',
       content:
@@ -68,52 +63,71 @@ export default function Home() {
     },
   ];
 
-  const workList = [
+  const works = [
     {
-      title: 'wisata toraja',
-      year: '2020',
-      services: 'Web',
-      desc: 'Lorem Ipsum is simply dummy text of the printing and ttypesetting industry. Lorem Ipsum has been the industrys staytypesetting industry. Lorem Ipsum has been the industrys staptypesetting industry. Lorem Ipsum has been the industrys staesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      projectName: 'Project A',
+      developmentDate: '2022',
+      services: 'Web Development',
+      agency: 'Personal Website',
+      tools: 'Tailwind, Laravel',
+      url: 'https://www.example.com/project-a',
+      overview:
+        'Ini adalah deskripsi proyek Project A. Proyek ini adalah pengembangan situs web yang melibatkan desain responsif dan integrasi dengan berbagai API pihak ketiga. Kami menggunakan teknologi seperti Tailwind CSS untuk mengoptimalkan UI dan Laravel untuk mengelola backend. Hasilnya adalah situs web yang cepat, interaktif, dan berfungsi dengan baik.',
+      slug: 'project-a',
+      image: '/placeholder.png', // URL gambar proyek A
     },
     {
-      title: 'wisata toraja',
-      year: '2020',
-      services: 'Web',
-      desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem typesetting industry. Lorem Ipsum has been the industrys staItypesetting industry. Lorem Ipsum has been the industrys staptypesetting industry. Lorem Ipsum has been the industrys stasum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      projectName: 'Project B',
+      developmentDate: '2023',
+      services: 'Mobile App Development',
+      agency: 'Tech Solutions Inc.',
+      tools: 'React Native, Node.js',
+      url: 'https://www.example.com/project-b',
+      overview:
+        'Project B adalah aplikasi seluler inovatif yang dibangun dengan React Native. Kami telah bekerja sama dengan Tech Solutions Inc. untuk mengembangkan aplikasi ini. Aplikasi ini memanfaatkan teknologi Node.js di sisi server untuk mengelola data dan interaksi pengguna. Aplikasi ini memungkinkan pengguna untuk melakukan berbagai tugas dengan cepat dan mudah.',
+      slug: 'project-b',
+      image: '/next.svg', // URL gambar proyek A
     },
     {
-      title: 'wisata toraja',
-      year: '2020',
-      services: 'Web',
-      desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-    },
-    {
-      title: 'wisata toraja',
-      year: '2020',
-      services: 'Web',
-      desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-    },
-    {
-      title: 'wisata toraja',
-      year: '2020',
-      services: 'Web',
+      projectName: 'Project C',
+      developmentDate: '2021',
+      services: 'UI/UX Design',
+      agency: 'Design Studio XYZ',
+      tools: 'Figma, Sketch',
+      url: 'https://www.example.com/project-c',
+      overview:
+        'Project C adalah proyek desain antarmuka pengguna yang dilakukan oleh Design Studio XYZ. Kami menggunakan alat seperti Figma dan Sketch untuk merancang tata letak, elemen UI, dan interaksi pengguna. Hasilnya adalah desain yang menarik dan ramah pengguna yang memenuhi kebutuhan klien kami.',
+      slug: 'project-c',
+      image: '/vercel.svg', // URL gambar proyek A
     },
   ];
 
-  const swiperRef = useRef<SwiperCore | null>(null);
+  // Service
+  const [hoveredService, setHoverdService] = useState<number>(0);
 
-  const handleNext = () => {
-    if (swiperRef.current) {
-      swiperRef.current.slideNext();
+  const handleMouseEnterService = (index: number) => {
+    setHoverdService(index);
+  };
+  // end of service
+
+  // Work
+  const [selectedWork, setSelectedWork] = useState<number>(0);
+  const swiperRefWork = useRef<SwiperCore | null>(null);
+
+  const handleNextWork = () => {
+    if (swiperRefWork.current && !swiperRefWork.current.isEnd) {
+      swiperRefWork.current.slideNext();
+      setSelectedWork(selectedWork + 1);
     }
   };
 
-  const handlePrev = () => {
-    if (swiperRef.current) {
-      swiperRef.current.slidePrev();
+  const handlePrevWork = () => {
+    if (swiperRefWork.current && !swiperRefWork.current.isBeginning) {
+      swiperRefWork.current.slidePrev();
+      setSelectedWork(selectedWork - 1);
     }
   };
-
+  // End of Work
   return (
     <>
       {/* Hero Section */}
@@ -175,9 +189,9 @@ export default function Home() {
             <div className='sticky top-0 bg-noice px-12'>
               <div className='h-screen pt-36'>
                 <Image
-                  src={whatIDoList[hoveredItem].imageUrl}
+                  src={services[hoveredService].imageUrl}
                   alt=''
-                  className='h-full w-full scale-100 transform object-contain transition-transform duration-500'
+                  className='h-full w-full transform object-contain transition-transform duration-500'
                   width={500}
                   height={500}
                 />
@@ -187,14 +201,17 @@ export default function Home() {
           <div className='w-full border-l border-dark bg-noice md:w-1/2'>
             <div className='h-full w-full'>
               <ul>
-                {whatIDoList.map((item, index) => (
-                  <li key={index} onMouseEnter={() => handleMouseEnter(index)}>
+                {services.map((item, index) => (
+                  <li
+                    key={index}
+                    onMouseEnter={() => handleMouseEnterService(index)}
+                  >
                     <div
                       className={` flex w-full flex-col border-dark px-8 py-20 transition-all duration-500 ${
-                        hoveredItem === index ? 'py-40' : ''
+                        hoveredService === index ? 'py-40' : ''
                       } 
                       ${
-                        index === whatIDoList.length - 1
+                        index === services.length - 1
                           ? 'border-b-0'
                           : 'border-b-2'
                       }`}
@@ -204,7 +221,7 @@ export default function Home() {
                           src={item.imageUrl}
                           alt=''
                           className={` w-full scale-100 transform object-contain transition-transform duration-500 ${
-                            hoveredItem === index ? 'visible' : 'invisible'
+                            hoveredService === index ? 'visible' : 'invisible'
                           } `}
                           width={0}
                           height={0}
@@ -213,7 +230,7 @@ export default function Home() {
                       <h4 className='text-3xl font-semibold'>{item.title}</h4>
                       <div
                         className={`flex h-0 items-center opacity-0 transition-all duration-500 ${
-                          hoveredItem === index
+                          hoveredService === index
                             ? 'mt-16 opacity-100 md:mt-8'
                             : ''
                         }`}
@@ -235,10 +252,10 @@ export default function Home() {
       {/* Work Section */}
       <HomeSection title='Work'>
         <div className='flex h-full'>
-          <div className='w-full border-r border-dark bg-noice py-10 md:block md:w-2/5'>
+          <div className='flex w-full flex-col justify-between border-r border-dark bg-noice py-10 md:block md:w-2/5'>
             <Swiper
               onBeforeInit={(swiper) => {
-                swiperRef.current = swiper;
+                swiperRefWork.current = swiper;
               }}
               grabCursor={false}
               effect={'creative'}
@@ -252,36 +269,36 @@ export default function Home() {
                 },
               }}
               modules={[EffectCreative]}
-              className='mySwiper'
+              className=''
               navigation={false}
             >
-              {workList.map((item, index) => (
+              {works.map((item, index) => (
                 <SwiperSlide
                   key={index}
                   className='h-full bg-background bg-noice'
                 >
                   <div className='flex flex-col gap-8 px-6 md:px-12'>
                     <div className='flex flex-col gap-2'>
-                      <span className='text-xl font-medium'>2022</span>
-                      <h3 className='text-5xl font-bold'>Wisata Toraja</h3>
+                      <span className='text-xl font-medium'>
+                        {item.developmentDate}
+                      </span>
+                      <h3 className='text-5xl font-bold'>{item.projectName}</h3>
                     </div>
                     <div className='flex flex-col gap-2'>
                       <span className='text-base'>Services</span>
-                      <h4 className='text-2xl font-medium'>Web Development</h4>
+                      <h4 className='text-2xl font-medium'>{item.services}</h4>
                     </div>
                     <div className='flex flex-col gap-2'>
                       <span className='text-base'>Agency</span>
-                      <h4 className='text-2xl font-medium'>Personal Website</h4>
+                      <h4 className='text-2xl font-medium'>{item.agency}</h4>
                     </div>
                     <div className='flex flex-col gap-2'>
                       <span className='text-base'>Tools</span>
-                      <h4 className='text-2xl font-medium'>
-                        Tailwind, Laravel
-                      </h4>
+                      <h4 className='text-2xl font-medium'>{item.tools}</h4>
                     </div>
                     <div className='flex flex-col gap-2'>
                       <span className='text-base'>View Project</span>
-                      <Link href={'#'}>
+                      <Link href={item.url}>
                         <h4 className='text-2xl font-medium underline'>
                           View Website
                         </h4>
@@ -289,90 +306,60 @@ export default function Home() {
                     </div>
                     <div className='flex flex-col gap-2'>
                       <span className='text-base'>Overview</span>
-                      <Link href={'#'}>
-                        <p className='text-lg'>{item.desc}</p>
-                      </Link>
+                      <p className='text-base'>{item.overview}</p>
                     </div>
                   </div>
                 </SwiperSlide>
               ))}
             </Swiper>
-            <div className='mt-20 flex gap-4 px-6 md:px-12'>
-              <button onClick={handlePrev}>
-                <div className='flex h-10 items-center  rounded-[100px] border border-dark bg-background px-6'>
-                  <svg
-                    fill='#000000'
-                    width='64px'
-                    height='64px'
-                    viewBox='0 0 24 24'
-                    id='left-arrow'
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='icon line'
-                  >
-                    <g id='SVGRepo_bgCarrier' stroke-width='0'></g>
-                    <g
-                      id='SVGRepo_tracerCarrier'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                    ></g>
-                    <g id='SVGRepo_iconCarrier'>
+            <div className='mt-20 flex items-center justify-between gap-4 px-6 md:px-12'>
+              <div className='flex gap-4'>
+                <button onClick={handlePrevWork}>
+                  <div className='flex h-8 items-center  rounded-[100px] border border-dark px-6 hover:scale-95'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='50'
+                      height='18'
+                      viewBox='0 0 50 18'
+                      fill='none'
+                    >
                       <path
-                        id='primary'
-                        d='M21,12H3M6,9,3,12l3,3'
-                        style={{
-                          fill: 'none',
-                          stroke: '#000000',
-                          strokeLinecap: 'round',
-                          strokeLinejoin: 'round',
-                          strokeWidth: 1.5,
-                        }}
-                      ></path>
-                    </g>
-                  </svg>
-                </div>
-              </button>
-              <button onClick={handleNext}>
-                <div className='flex h-10 items-center  rounded-[100px] border border-dark bg-background px-6'>
-                  <svg
-                    fill='#000000'
-                    width='64px'
-                    height='64px'
-                    viewBox='0 0 24 24'
-                    id='right-arrow'
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='icon line'
-                  >
-                    <g id='SVGRepo_bgCarrier' stroke-width='0'></g>
-                    <g
-                      id='SVGRepo_tracerCarrier'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                    ></g>
-                    <g id='SVGRepo_iconCarrier'>
+                        d='M0 9L15 17.6603V0.339746L0 9ZM13.5 10.5H50V7.5H13.5V10.5Z'
+                        fill='black'
+                      />
+                    </svg>
+                  </div>
+                </button>
+                <button onClick={handleNextWork}>
+                  <div className='flex h-8 items-center  rounded-[100px] border border-dark px-6 hover:scale-95'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='50'
+                      height='18'
+                      viewBox='0 0 50 18'
+                      fill='none'
+                    >
                       <path
-                        id='primary'
-                        d='M3,12H21m-3,3,3-3L18,9'
-                        style={{
-                          fill: 'none',
-                          stroke: '#000000',
-                          strokeLinecap: 'round',
-                          strokeLinejoin: 'round',
-                          strokeWidth: 1.5,
-                        }}
-                      ></path>
-                    </g>
-                  </svg>
-                </div>
-              </button>
+                        d='M50 9L35 0.339746V17.6603L50 9ZM0 10.5H36.5V7.5H0V10.5Z'
+                        fill='black'
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+
+              <Link href={'/work'} className='font-medium'>
+                View All
+              </Link>
             </div>
           </div>
           <div className='hidden border-l border-dark md:block md:w-3/5'>
             <div className='sticky top-32'>
-              <div className='h-full bg-noice'>
+              <div className='h-screen bg-noice'>
                 <Image
-                  src={'/placeholder.png'}
-                  alt=''
-                  className='h-full w-full scale-100 transform object-contain transition-transform duration-500'
+                  src={works[selectedWork].image}
+                  alt={works[selectedWork].projectName}
+                  className='h-full w-full transform object-contain transition-transform duration-500'
                   width={500}
                   height={500}
                 />
@@ -385,7 +372,12 @@ export default function Home() {
 
       {/* Mini Project Section */}
       <HomeSection title='Mini Project'>
-        <div className='h-screen bg-noice'></div>
+        <div className='flex h-screen'>
+          <div className='w-full border-r border-dark md:w-1/2'>test</div>
+          <div className='hidden border-l border-dark md:block md:w-1/2'>
+            tes
+          </div>
+        </div>
       </HomeSection>
       {/* End Mini Project Section */}
     </>
