@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { neueMontreal } from '@/lib/styles/font';
-import { Header } from '@/lib/components';
+import { Footer, Header } from '@/lib/components';
 
 export const metadata: Metadata = {
   title: 'nineneel.',
@@ -18,6 +18,7 @@ export default function RootLayout({
       <body className={`${neueMontreal.variable} font-primary`}>
         <Header />
         <main className='mt-16'>{children}</main>
+        <Footer />
       </body>
     </html>
   );

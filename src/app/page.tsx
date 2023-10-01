@@ -393,7 +393,7 @@ export default function Home() {
 
       {/* Mini Project Section */}
       <HomeSection title='Mini Project'>
-        <div className='flex h-screen'>
+        <div className='flex h-full'>
           <div className='w-full border-r border-dark bg-noice md:w-1/2'>
             <ul>
               <li className=''>
@@ -418,8 +418,33 @@ export default function Home() {
               </li>
             </ul>
           </div>
-          <div className='hidden min-h-screen border-l border-dark md:block md:w-1/2'>
-            tes
+          <div className='hidden h-full border-l border-dark md:block md:w-1/2'>
+            <div className='flex flex-col'>
+              <div className='w-full border-b-2 border-dark'>
+                <Image
+                  src='/placeholder.png'
+                  alt='placeholder'
+                  height={500}
+                  width={500}
+                  className='aspect-square h-full w-full'
+                />
+              </div>
+              <div className='flex flex-col gap-2 px-4 py-4'>
+                <span className='w-max border border-dark px-2 py-0.5'>
+                  game
+                </span>
+                <h2 className='text-3xl font-bold'>Game One</h2>
+                <p>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industrys
+                  standard dummy text ever since the 1500s.
+                </p>
+                {/* button */}
+                <div className='mt-2 w-max border border-dark px-4 py-1'>
+                  View Project
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </HomeSection>
