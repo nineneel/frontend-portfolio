@@ -117,14 +117,14 @@ export default function Home() {
   const handleNextWork = () => {
     if (swiperRefWork.current && !swiperRefWork.current.isEnd) {
       swiperRefWork.current.slideNext();
-      setSelectedWork(selectedWork + 1);
+      setSelectedWork(swiperRefWork.current.realIndex);
     }
   };
 
   const handlePrevWork = () => {
     if (swiperRefWork.current && !swiperRefWork.current.isBeginning) {
       swiperRefWork.current.slidePrev();
-      setSelectedWork(selectedWork - 1);
+      setSelectedWork(swiperRefWork.current.realIndex);
     }
   };
   // End of Work
@@ -269,15 +269,20 @@ export default function Home() {
                 },
               }}
               modules={[EffectCreative]}
-              className=''
+              className='w-full'
+              onSlideChange={() => {
+                if (swiperRefWork.current) {
+                  setSelectedWork(swiperRefWork.current.realIndex);
+                }
+              }}
               navigation={false}
             >
               {works.map((item, index) => (
                 <SwiperSlide
                   key={index}
-                  className='h-full bg-background bg-noice'
+                  className='h-full w-full bg-background bg-noice'
                 >
-                  <div className='flex flex-col gap-8 px-6 md:px-12'>
+                  <div className='flex w-full flex-col gap-8 px-6 md:px-12'>
                     <div className='flex flex-col gap-2'>
                       <span className='text-xl font-medium'>
                         {item.developmentDate}
@@ -298,7 +303,7 @@ export default function Home() {
                     </div>
                     <div className='flex flex-col gap-2'>
                       <span className='text-base'>View Project</span>
-                      <Link href={item.url}>
+                      <Link href={item.url} className='w-min'>
                         <h4 className='text-2xl font-medium underline'>
                           View Website
                         </h4>
@@ -308,49 +313,65 @@ export default function Home() {
                       <span className='text-base'>Overview</span>
                       <p className='text-base'>{item.overview}</p>
                     </div>
+                    <div className='pb-10 md:hidden'>
+                      <Image
+                        src={item.image}
+                        alt=''
+                        className='h-full w-full transform object-contain transition-transform duration-500'
+                        width={500}
+                        height={500}
+                      />
+                    </div>
                   </div>
                 </SwiperSlide>
               ))}
             </Swiper>
-            <div className='mt-20 flex items-center justify-between gap-4 px-6 md:px-12'>
-              <div className='flex gap-4'>
-                <button onClick={handlePrevWork}>
-                  <div className='flex h-8 items-center  rounded-[100px] border border-dark px-6 hover:scale-95'>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      width='50'
-                      height='18'
-                      viewBox='0 0 50 18'
-                      fill='none'
-                    >
-                      <path
-                        d='M0 9L15 17.6603V0.339746L0 9ZM13.5 10.5H50V7.5H13.5V10.5Z'
-                        fill='black'
-                      />
-                    </svg>
-                  </div>
-                </button>
-                <button onClick={handleNextWork}>
-                  <div className='flex h-8 items-center  rounded-[100px] border border-dark px-6 hover:scale-95'>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      width='50'
-                      height='18'
-                      viewBox='0 0 50 18'
-                      fill='none'
-                    >
-                      <path
-                        d='M50 9L35 0.339746V17.6603L50 9ZM0 10.5H36.5V7.5H0V10.5Z'
-                        fill='black'
-                      />
-                    </svg>
-                  </div>
-                </button>
+            <div className='mt-20 px-6 md:px-12'>
+              <div className='mb-3'>
+                <span className='text-lg font-normal'>
+                  0{selectedWork + 1}/0{works.length}
+                </span>
               </div>
+              <div className='flex items-center justify-between gap-4'>
+                <div className='flex gap-4'>
+                  <button onClick={handlePrevWork}>
+                    <div className='flex h-8 items-center  rounded-[100px] border border-dark px-6 hover:scale-95'>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='50'
+                        height='18'
+                        viewBox='0 0 50 18'
+                        fill='none'
+                      >
+                        <path
+                          d='M0 9L15 17.6603V0.339746L0 9ZM13.5 10.5H50V7.5H13.5V10.5Z'
+                          fill='black'
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                  <button onClick={handleNextWork}>
+                    <div className='flex h-8 items-center  rounded-[100px] border border-dark px-6 hover:scale-95'>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='50'
+                        height='18'
+                        viewBox='0 0 50 18'
+                        fill='none'
+                      >
+                        <path
+                          d='M50 9L35 0.339746V17.6603L50 9ZM0 10.5H36.5V7.5H0V10.5Z'
+                          fill='black'
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
 
-              <Link href={'/work'} className='font-medium'>
-                View All
-              </Link>
+                <Link href={'/work'} className='font-medium'>
+                  View All
+                </Link>
+              </div>
             </div>
           </div>
           <div className='hidden border-l border-dark md:block md:w-3/5'>
@@ -373,8 +394,31 @@ export default function Home() {
       {/* Mini Project Section */}
       <HomeSection title='Mini Project'>
         <div className='flex h-screen'>
-          <div className='w-full border-r border-dark md:w-1/2'>test</div>
-          <div className='hidden border-l border-dark md:block md:w-1/2'>
+          <div className='w-full border-r border-dark bg-noice md:w-1/2'>
+            <ul>
+              <li className=''>
+                <div className='flex items-center justify-between border-b-2 border-dark bg-transparent/10 px-6 py-4 md:px-12'>
+                  {/* tag */}
+                  <span className='border border-dark px-2 py-0.5'>game</span>
+                  {/* title */}
+                  <h3 className='truncate text-right text-2xl font-medium'>
+                    Game One
+                  </h3>
+                </div>
+              </li>
+              <li className=''>
+                <div className='flex items-center justify-between border-b-2 border-dark px-6 py-4 md:px-12'>
+                  {/* tag */}
+                  <span className='border border-dark px-2 py-0.5'>game</span>
+                  {/* title */}
+                  <h3 className='truncate text-right text-2xl font-medium'>
+                    Game Cloning Two
+                  </h3>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div className='hidden min-h-screen border-l border-dark md:block md:w-1/2'>
             tes
           </div>
         </div>

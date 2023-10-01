@@ -7,7 +7,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className='sticky top-0 z-50 w-full'>
+    <header className='fixed top-0 z-50 w-full'>
       <NavBar onClick={() => setIsOpen(!isOpen)} />
       <SideBar isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
     </header>
